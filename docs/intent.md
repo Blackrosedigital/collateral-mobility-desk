@@ -19,6 +19,12 @@ When a sharp market move triggers a large variation margin call, the firm that m
 
 These are the Desk's five seats: buy-side, dealer, custodian, ledger operator and supervisor. All five read one record.
 
+## Who buys it, and the ask
+
+- **Buyers, in order:** LDI and pension managers first. Custodians come next, because they could offer the Desk to their own clients. Dealers, tokenisation platforms and market infrastructures follow.
+- **The ask:** one design partner, ideally an LDI or pension manager, for a 6–10 week proof of concept on its own anonymised collateral agreement and holdings data.
+- **Deal shape:** a fixed-price proof of concept. Platform IP stays with the Desk; the partner owns its data and results.
+
 ## Root causes
 
 | Root cause | What happens today | Consequence |
@@ -29,6 +35,13 @@ These are the Desk's five seats: buy-side, dealer, custodian, ledger operator an
 | Terms live in documents | Eligibility rules and haircuts sit in PDFs and spreadsheets | Rekeying errors; new assets such as tokens checked by hand |
 
 Tokenisation fixes the first two causes, because a tokenised MMF unit can move at any hour. It does not fix the last two. Checking the asset against the agreement, agreeing the call and recording the result still happen separately and by hand at each firm. The Desk exists to close that half.
+
+## Why it matters
+
+- In September 2022, a rapid rise in gilt yields set off what the Bank of England's Financial Policy Committee called "a vicious spiral of collateral calls and forced gilt sales" in LDI funds. The Bank had to buy long-dated gilts to restore orderly markets ([FPC, October 2022](https://www.bankofengland.co.uk/financial-policy-summary-and-record/2022/october-2022)).
+- In the March 2020 "dash for cash", UK non-banks had to find about £15bn of net variation margin over two weeks. In the Bank's 2024 system-wide stress exercise, about 80% of liquidity needs came from variation margin ([Bank of England, July 2024](https://www.bankofengland.co.uk/speech/2024/july/nathanael-benjamin-speech-followed-by-panel-preparing-for-liquidity-stresses)).
+- The settlement gap will not close soon. CHAPS opens at 01:30 from September 2027, and weekend settlement will come no earlier than 2029 ([Bank of England, May 2026](https://www.bankofengland.co.uk/paper/2026/cp/extending-rtgs-and-chaps-settlement-hours-next-steps)).
+- Tokenised MMFs and gilts are moving towards use as collateral. In July 2026, [ISDA and GDF published a report](https://www.isda.org/2026/07/07/isda-and-gdf-publish-tokenization-report/) on using tokenised MMFs as derivatives collateral.
 
 ## What to build
 
@@ -53,11 +66,21 @@ The flow:
 - There is one agreed record of the call, so nothing needs reconciling afterwards.
 - New kinds of collateral, including tokens, are checked against the agreement automatically.
 
+## Contribution to CDM
+
+Draft a **token eligibility profile** and take it to the [FINOS CDM Tokenized Assets Working Group](https://cdm.finos.org/docs/CDM-Tokenized-Assets-WG). It maps the facts a tokenised asset must carry to existing CDM criteria where they exist, proposes new criteria where they don't, and comes with the prototype's test cases. This is in scope.
+
 ## Scope
 
 **In scope:** variation margin on bilateral OTC derivatives under a collateral agreement, for a giver holding gilts and MMFs, starting in the UK.
 
 **Out of scope:** initial margin, margin at clearing houses, valuation models and crypto-assets.
+
+**Not in this increment (later work):** a real ledger (the increment runs on the simulated ledger), a second ledger and cash leg (proof of concept), and reporting at source through ISDA's Digital Regulatory Reporting.
+
+**Where it runs:** in the partner's cloud or a dedicated tenancy, with UK data residency.
+
+**Build constraints:** built by the owner with AI tools; this increment is about 4 weeks. `spec.md` must fit inside that.
 
 ## This increment: make the prototype ready for design partners (about 4 weeks)
 
@@ -83,6 +106,8 @@ The flow:
 - There are fewer breaks than the current process across the shadow run.
 - The time from call to agreed amount is shorter.
 - A weekend call is completed end to end.
+
+**Baselines:** the partner's current break rate and its time from call to agreed amount are captured in week 0. The proof-of-concept measures are judged against them.
 
 ## Non-negotiables
 
@@ -124,6 +149,14 @@ The flow:
 | Desk prototype | Built, on illustrative data, with a simulated ledger. It shows a £180m Friday-evening call met with tokenised MMF units and gilts, across five role views. |
 | cdm-collateral-mapper | Built and tested: 15 tests pass, all five FINOS sample schedules validate, and its output passes the `finos-cdm` package. Not yet wired into the Desk. |
 | Clause-to-CDM agent | Built: 81 tests pass, and it exports an approved, hash-sealed schedule. A live call to the model is still to be tested. |
+
+## Assumptions to test
+
+Each one is a finding of the proof of concept, not a precondition.
+
+- The ledger record can be given legal standing, so the parties' agreements treat it as the record.
+- Regulators accept tokenised MMF units and gilts as eligible variation margin.
+- Both parties run the same CDM version and conformance-tested event logic.
 
 ## Risks
 
