@@ -1,7 +1,7 @@
 # Intent: Collateral Mobility Desk
 
 - **Owner:** Christopher Mensah
-- **Status:** Draft for sign-off (Gate 1)
+- **Status:** Signed off by Christopher Mensah, 2026-11-18 (Gate 1 passed)
 - **Date:** 2026-11-15
 - **Sources:** [Product brief](https://claude.ai/artifact/NcLkoAxYT3BPH1zDfqiCJZ) and [concept note](https://claude.ai/artifact/8dpGPkLhDe65Js3JZJL1HB) (October 2026)
 - **Next stage reads this:** `spec.md`
@@ -170,4 +170,4 @@ Each one is a finding of the proof of concept, not a precondition.
 
 ## Sign-off
 
-- [ ] Christopher: this intent is right and in my words
+- [x] Christopher: this intent is right and in my words (2026-11-18)
